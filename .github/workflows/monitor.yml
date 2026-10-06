@@ -1,3 +1,4 @@
+# The scheduled trigger runs from the default branch.
 name: Sacramento game-times monitor
 
 on:
