@@ -18,6 +18,8 @@ class GameTimesParser(HTMLParser):
         self.matches = []
     def handle_starttag(self, tag, attrs):
         if tag in {"h1","h2","h3","h4","h5","h6"}:
+            if self.in_game_times and self.heading_tag is not None:
+                self.in_game_times = False
             self.heading_tag = tag
         if tag == "a" and self.in_game_times:
             self.anchor_hrefs.append(dict(attrs).get("href"))
@@ -26,7 +28,6 @@ class GameTimesParser(HTMLParser):
             self.anchor_hrefs.pop()
         if tag == self.heading_tag:
             self.heading_tag = None
-            self.in_game_times = False
     def handle_data(self, data):
         text = " ".join(data.split())
         if not text:
